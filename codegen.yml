@@ -1,0 +1,21 @@
+# codegen.yml
+schema: http://localhost/graphql
+documents: ./src/**/*.gql
+overwrite: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+generates:
+  ./fragment-types.json:
+    plugins:
+      - fragment-matcher
+  ./src/apollo-generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      nonOptionalTypename: true
+      withHOC: false
+      withComponent: false
+      withHooks: true
